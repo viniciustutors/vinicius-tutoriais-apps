@@ -2,7 +2,7 @@
   {
     "name": "Bachata-S4",
     "source": "https://github.com/JICA98/Bachata-S4",
-    "asset_regex": "arm64-v8a\\.apk$"
+    "bachatas4-0.2.3-release.apk"
   },
   {
     "name": "Universal Installer",
