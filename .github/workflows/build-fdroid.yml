@@ -1,0 +1,194 @@
+name: Publicar Vinicius Tutoriais Apps
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps.json"
+      - ".github/workflows/build-fdroid.yml"
+  schedule:
+    - cron: "17 9 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v6
+
+      - name: Conferir chave secreta
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.FDROID_SIGNING_BUNDLE_B64 }}" ]; then
+            echo "::error::Secret FDROID_SIGNING_BUNDLE_B64 não encontrado."
+            exit 1
+          fi
+
+      - name: Instalar ferramentas
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y aapt apksigner default-jdk-headless python3-venv unzip
+          python3 -m venv .venv
+          . .venv/bin/activate
+          pip install --upgrade pip
+          pip install fdroidserver requests
+
+      - name: Restaurar chave privada
+        shell: bash
+        run: |
+          mkdir -p .fdroid-secrets
+          printf '%s' "${{ secrets.FDROID_SIGNING_BUNDLE_B64 }}" | base64 -d > /tmp/fdroid-signing.zip
+          unzip -q /tmp/fdroid-signing.zip -d .fdroid-secrets
+          chmod 600 .fdroid-secrets/fdroid.keystore .fdroid-secrets/secret.env
+
+      - name: Criar configuração do repositório
+        shell: bash
+        run: |
+          set -a
+          source .fdroid-secrets/secret.env
+          set +a
+
+          cat > config.yml <<EOF
+          repo_url: "https://viniciustutors.github.io/vinicius-tutoriais-apps/fdroid/repo"
+          repo_name: "Vinicius Tutoriais Apps"
+          repo_description: "Aplicativos e emuladores selecionados e indicados pelo canal Vinicius Tutoriais. Os APKs são cópias intactas obtidas das releases oficiais dos respectivos desenvolvedores."
+          archive_older: 0
+          keystore: ".fdroid-secrets/fdroid.keystore"
+          repo_keyalias: "${FDROID_KEY_ALIAS}"
+          keystorepass: "${FDROID_KEYSTORE_PASS}"
+          keypass: "${FDROID_KEYSTORE_PASS}"
+          EOF
+
+      - name: Buscar APKs oficiais
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          rm -rf repo metadata
+          mkdir -p repo metadata
+
+          python3 <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import requests
+
+          apps = json.loads(Path("apps.json").read_text(encoding="utf-8"))
+          outdir = Path("repo")
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "User-Agent": "Vinicius-Tutoriais-Apps",
+          }
+          token = os.environ.get("GH_TOKEN")
+          if token:
+              headers["Authorization"] = f"Bearer {token}"
+
+          for app in apps:
+              name = app["name"]
+              source = app["source"]
+              pattern = re.compile(app.get("asset_regex", r"\.apk$"), re.I)
+
+              parsed = urlparse(source)
+              if parsed.netloc.lower() != "github.com":
+                  raise SystemExit(f"{name}: use um repositório GitHub em 'source' nesta primeira versão.")
+
+              parts = [p for p in parsed.path.strip("/").split("/") if p]
+              if len(parts) < 2:
+                  raise SystemExit(f"{name}: link GitHub inválido: {source}")
+
+              owner, repo = parts[:2]
+              api = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
+              print(f"\n[{name}] {api}")
+              r = requests.get(api, headers=headers, timeout=30)
+              r.raise_for_status()
+              release = r.json()
+
+              matches = [
+                  asset for asset in release.get("assets", [])
+                  if pattern.search(asset.get("name", ""))
+              ]
+              if not matches:
+                  names = ", ".join(a.get("name", "") for a in release.get("assets", []))
+                  raise SystemExit(
+                      f"{name}: nenhum APK corresponde a {pattern.pattern!r}. "
+                      f"Arquivos disponíveis: {names}"
+                  )
+
+              matches.sort(
+                  key=lambda a: (
+                      "universal" not in a["name"].lower(),
+                      "arm64" not in a["name"].lower(),
+                      a["name"].lower(),
+                  )
+              )
+              asset = matches[0]
+              url = asset["browser_download_url"]
+              filename = asset["name"]
+              dest = outdir / filename
+
+              print(f"[{name}] baixando {filename}")
+              with requests.get(url, headers=headers, stream=True, timeout=180) as resp:
+                  resp.raise_for_status()
+                  with dest.open("wb") as f:
+                      for chunk in resp.iter_content(chunk_size=1024 * 1024):
+                          if chunk:
+                              f.write(chunk)
+
+              print(f"[{name}] OK - {dest.stat().st_size / 1024 / 1024:.1f} MB")
+          PY
+
+      - name: Gerar índice F-Droid assinado
+        shell: bash
+        run: |
+          . .venv/bin/activate
+          fdroid update --create-metadata
+          fdroid update
+
+      - name: Montar site
+        shell: bash
+        run: |
+          mkdir -p site/fdroid
+          cp -a repo site/fdroid/repo
+          cat > site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="pt-BR">
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <title>Vinicius Tutoriais Apps</title>
+          <body style="font-family:system-ui;max-width:760px;margin:60px auto;padding:0 20px">
+            <h1>Vinicius Tutoriais Apps</h1>
+            <p>Aplicativos e emuladores recomendados pelo canal Vinicius Tutoriais.</p>
+            <p><strong>URL para o F-Droid Basic:</strong></p>
+            <code>https://viniciustutors.github.io/vinicius-tutoriais-apps/fdroid/repo</code>
+          </body>
+          </html>
+          EOF
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar publicação
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
