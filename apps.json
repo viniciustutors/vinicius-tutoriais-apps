@@ -1,0 +1,27 @@
+[
+  {
+    "name": "AnyAPK",
+    "source": "https://github.com/sam1am/anyapk",
+    "asset_regex": "arm64-v8a\\.apk$"
+  },
+  {
+    "name": "Universal Installer",
+    "source": "https://github.com/pass-with-high-score/universal-installer",
+    "asset_regex": "^app-release\\.apk$"
+  },
+  {
+    "name": "InstallerX-Revived",
+    "source": "https://github.com/wxxsfxyzm/InstallerX-Revived",
+    "asset_regex": "offline.*\\.apk$"
+  },
+  {
+    "name": "Winlator",
+    "source": "https://github.com/brunodev85/Winlator",
+    "asset_regex": "\\.apk$"
+  },
+  {
+    "name": "Vita3K",
+    "source": "https://github.com/Vita3K/Vita3K-Android",
+    "asset_regex": "\\.apk$"
+  }
+]

@@ -1,0 +1,19 @@
+PASTA PRONTA CRIADA PELO TÚNEL
+
+1. Abra no navegador:
+https://github.com/viniciustutors/vinicius-tutoriais-apps
+
+2. Envie TODO o conteúdo desta pasta para o repositório.
+
+3. Ative:
+Configurações > Pages > Build and deployment > Source > GitHub Actions
+
+4. Abra:
+https://github.com/viniciustutors/vinicius-tutoriais-apps/actions
+
+5. Execute "Publicar Vinicius Tutoriais Apps".
+
+6. URL final para adicionar no F-Droid Basic:
+https://viniciustutors.github.io/vinicius-tutoriais-apps/fdroid/repo
+
+Depois, para incluir outro aplicativo, edite apenas apps.json.
