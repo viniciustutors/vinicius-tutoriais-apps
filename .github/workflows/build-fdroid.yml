@@ -66,6 +66,7 @@ jobs:
           cat > config.yml <<EOF
           repo_url: "https://viniciustutors.github.io/vinicius-tutoriais-apps/fdroid/repo"
           repo_name: "Vinicius Tutoriais Apps"
+          repo_icon: "icon.png"
           repo_description: "Aplicativos e emuladores selecionados e indicados pelo canal Vinicius Tutoriais. Os APKs são cópias intactas obtidas das releases oficiais dos respectivos desenvolvedores."
           archive_older: 0
           keystore: ".fdroid-secrets/fdroid.keystore"
@@ -80,7 +81,8 @@ jobs:
         shell: bash
         run: |
           rm -rf repo metadata
-          mkdir -p repo metadata
+          mkdir -p repo metadata repo/icons
+          cp icon.png repo/icons/icon.png
 
           python3 <<'PY'
           import json
