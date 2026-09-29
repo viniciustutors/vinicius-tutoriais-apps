@@ -2,7 +2,63 @@
   {
     "name": "Bachata-S4",
     "source": "https://github.com/JICA98/Bachata-S4",
-    "bachatas4-0.2.3-release.apk"
+    "asset_regex": "^bachatas4-.*-release\\.apk$"
+  },
+  {
+    "name": "Bachata-S4-Plus",
+    "source": "https://github.com/erickmendes22/Bachata-S4-Plus",
+    "asset_regex": "^Bachata-S4-Plus-v.*\\.apk$"
+  },
+  {
+    "name": "EmuCoreX",
+    "source": "https://github.com/sashkinbro/EmuCoreX",
+    "asset_regex": "^EmuCoreX\\.v.*\\.apk$"
+  },
+  {
+    "name": "EmuCoreC",
+    "source": "https://github.com/sashkinbro/EmuCoreC",
+    "asset_regex": "^EmuCoreC\\.v.*\\.apk$"
+  },
+  {
+    "name": "EmuCoreV",
+    "source": "https://github.com/sashkinbro/EmuCoreV",
+    "asset_regex": "^EmuCoreV\\.v.*\\.apk$"
+  },
+  {
+    "name": "WinNative",
+    "source": "https://github.com/WinNative-Emu/WinNative",
+    "asset_regex": "^WinNative-v.*-Standard-signed\\.apk$"
+  },
+  {
+    "name": "Quick Tile Settings",
+    "source": "https://github.com/RBN-Apps/Quick-Tile-Settings",
+    "asset_regex": "^quick-tile-settings-.*\\.apk$"
+  },
+  {
+    "name": "Winlator Ludashi Plus",
+    "source": "https://github.com/squalle0nhart/winlator_ludashi_plus",
+    "asset_regex": "^winlator-ludashi-plus-.*\\.apk$",
+    "include_prerelease": true
+  },
+  {
+    "name": "Vita3K Plus",
+    "source": "https://github.com/nckstwrt/Vita3K-Plus",
+    "asset_regex": "^Vita3k-Plus-v.*\\.apk$"
+  },
+  {
+    "name": "X360 Mobile",
+    "source": "https://github.com/Ashnar2602/X360-Mobile---OFFICIAL",
+    "asset_regex": "^x360-mobile-.*\\.apk$"
+  },
+  {
+    "name": "Winlator",
+    "source": "https://github.com/brunodev85/Winlator",
+    "asset_regex": "^Winlator_.*\\.apk$"
+  },
+  {
+    "name": "Shevery",
+    "source": "https://github.com/HmnDev-Tech/shevery",
+    "asset_regex": "^manager-release\\.apk$"
   },
   {
     "name": "Universal Installer",
@@ -10,18 +66,118 @@
     "asset_regex": "^app-release\\.apk$"
   },
   {
-    "name": "InstallerX-Revived",
-    "source": "https://github.com/wxxsfxyzm/InstallerX-Revived",
-    "asset_regex": "offline.*\\.apk$"
+    "name": "AnyAPK",
+    "source": "https://github.com/sam1am/anyapk",
+    "asset_regex": "^anyapk-.*-universal\\.apk$"
   },
   {
-    "name": "Winlator",
-    "source": "https://github.com/brunodev85/Winlator",
-    "asset_regex": "\\.apk$"
+    "name": "Candy Browser",
+    "source": "https://github.com/sk2andy/candy-browser",
+    "asset_regex": "^CandyBrowser-v[0-9]+(?:\\.[0-9]+)*-release\\.apk$"
   },
   {
-    "name": "Vita3K",
-    "source": "https://github.com/Vita3K/Vita3K-Android",
-    "asset_regex": "\\.apk$"
+    "name": "Root My Galaxy",
+    "source": "https://github.com/BuSung-dev/Root-My-Galaxy",
+    "asset_regex": "^app-debug\\.apk$"
+  },
+  {
+    "name": "LastWave Native",
+    "source": "https://github.com/Clash-Projects/LastWave-Native",
+    "asset_regex": "^LastWave-v.*-universal\\.apk$"
+  },
+  {
+    "name": "memhogs",
+    "source": "https://github.com/cicerothoma/memhogs-android",
+    "asset_regex": "^memhogs-.*\\.apk$"
+  },
+  {
+    "name": "Xenra",
+    "source": "https://github.com/Yebot32/xenra",
+    "asset_regex": "^Xenra-.*-green-release\\.apk$"
+  },
+  {
+    "name": "FilePipe",
+    "source": "https://github.com/bikram-agarwal/FilePipe",
+    "asset_regex": "^filepipe-v.*-fdroid\\.apk$"
+  },
+  {
+    "name": "Orion Store",
+    "source": "https://github.com/RookieEnough/Orion-Store",
+    "asset_regex": "^app-release\\.apk$"
+  },
+  {
+    "name": "ADNS",
+    "source": "https://github.com/eyalm2000/adns",
+    "asset_regex": "^app-foss-release\\.apk$"
+  },
+  {
+    "name": "ShizuCallRecorder",
+    "source": "https://github.com/kitsumed/ShizuCallRecorder",
+    "asset_regex": "^ShizuCallRecorder-.*\\.apk$"
+  },
+  {
+    "name": "Essentials",
+    "source": "https://github.com/sameerasw/essentials",
+    "asset_regex": "^app-release\\.apk$"
+  },
+  {
+    "name": "BlockAds",
+    "source": "https://github.com/pass-with-high-score/blockads-android",
+    "asset_regex": "^app-universal-release\\.apk$"
+  },
+  {
+    "name": "Install With Options",
+    "source": "https://github.com/zacharee/InstallWithOptions",
+    "asset_regex": "^InstallWithOptions_.*-release\\.apk$"
+  },
+  {
+    "name": "SwiftSlate",
+    "source": "https://github.com/Musheer360/SwiftSlate",
+    "asset_regex": "^SwiftSlate-v.*\\.apk$"
+  },
+  {
+    "name": "App Manager",
+    "source": "https://github.com/MuntashirAkon/AppManager",
+    "asset_regex": "^AppManager_v.*\\.apk$"
+  },
+  {
+    "name": "DeepDenoiser",
+    "source": "https://github.com/sayampy/deepdenoiser",
+    "asset_regex": "^DeepDenoiser-Arm64.*\\.apk$"
+  },
+  {
+    "name": "RebootNya",
+    "source": "https://github.com/daisukiKaffuChino/RebootNya",
+    "asset_regex": "^RebootNya_.*\\.apk$"
+  },
+  {
+    "name": "aShell You",
+    "source": "https://github.com/DP-Hridayan/aShellYou",
+    "asset_regex": "^aShellYou-v.*-fdroid-release\\.apk$"
+  },
+  {
+    "name": "Image Toolbox",
+    "source": "https://github.com/T8RIN/ImageToolbox",
+    "asset_regex": "^image-toolbox-.*-foss-universal\\.apk$"
+  },
+  {
+    "name": "SD Maid SE",
+    "source": "https://github.com/d4rken-org/sdmaid-se",
+    "asset_regex": "^eu\\.darken\\.sdmse-v.*-FOSS-RELEASE\\.apk$"
+  },
+  {
+    "name": "PaperKnife",
+    "source": "https://github.com/potatameister/PaperKnife",
+    "asset_regex": "^paperknife-v.*\\.apk$"
+  },
+  {
+    "name": "BoostX",
+    "source": "https://github.com/AumGupta/BoostX",
+    "asset_regex": "^app-release\\.apk$"
+  },
+  {
+    "name": "NewPipe",
+    "source": "https://github.com/TeamNewPipe/NewPipe",
+    "asset_regex": "^NewPipe_v.*\\.apk$"
   }
 ]
