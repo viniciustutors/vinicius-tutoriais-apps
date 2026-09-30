@@ -87,6 +87,7 @@ jobs:
           s = s.replace("__KEYSTORE_PASS__", os.environ["FDROID_KEYSTORE_PASS"])
           p.write_text(s)
           PY
+          chmod 600 config.yml
 
       - name: Buscar APKs e gerar metadados automaticamente
         env:
