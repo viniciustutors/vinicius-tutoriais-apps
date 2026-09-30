@@ -84,6 +84,15 @@ def parse_badging(apk):
             "versionName":version_name or "desconhecida","minSdk":min_sdk or "não informado",
             "targetSdk":target_sdk or "não informado","label":label,"iconRef":icon,"abis":abis}
 
+def normalize_http_url(value):
+    value=(value or "").strip()
+    if not value: return ""
+    if re.match(r"^https?://", value, flags=re.I): return value
+    if value.startswith("//"): return "https:" + value
+    if re.match(r"^[A-Za-z0-9.-]+(?::[0-9]+)?(?:/.*)?$", value):
+        return "https://" + value
+    return ""
+
 def detect_category(app_name, summary):
     t=f"{app_name} {summary}".lower()
     if any(k in t for k in ["emulator","emulador","winlator","vita3k","x360","bachata","emucore","winnative","xenra","lastwave"]): return "Games"
@@ -118,7 +127,7 @@ def write_metadata(app, repo_info, release, apk_path, tech, readme):
       f"Android mínimo (SDK): {tech['minSdk']}\nTarget SDK: {tech['targetSdk']}\n"
       f"Arquiteturas: {abis}\nTamanho do APK: {size_mb:.1f} MB\n"
       f"Release oficial: {release_url}\nCódigo-fonte: {app['source']}")
-    homepage=repo_info.get("homepage") or ""
+    homepage=normalize_http_url(repo_info.get("homepage"))
     license_id=((repo_info.get("license") or {}).get("spdx_id") or "").strip()
     if license_id in {"NOASSERTION","OTHER"}: license_id=""
     meta={"AutoName":app_name,"Summary":summary,"Description":description+technical,
