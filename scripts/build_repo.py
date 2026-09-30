@@ -140,8 +140,8 @@ def write_metadata(app, repo_info, release, apk_path, tech, readme):
     meta={k:v for k,v in meta.items() if v not in ("",None,[])}
     (METADATA_DIR/f"{package}.yml").write_text(yaml.safe_dump(meta,allow_unicode=True,sort_keys=False,width=1000),encoding="utf-8")
     if not tech.get("iconRef"):
-        make_fallback_icon(METADATA_DIR/package/"en-US"/"images"/"icon.png",app_name)
-    locale_dir=METADATA_DIR/package/"en-US"; locale_dir.mkdir(parents=True,exist_ok=True)
+        make_fallback_icon(METADATA_DIR/package/"pt-BR"/"images"/"icon.png",app_name)
+    locale_dir=METADATA_DIR/package/"pt-BR"; locale_dir.mkdir(parents=True,exist_ok=True)
     (locale_dir/"short_description.txt").write_text(summary+"\n",encoding="utf-8")
     (locale_dir/"full_description.txt").write_text(description+technical+"\n",encoding="utf-8")
     return {"name":app_name,"package":package,"versionName":tech["versionName"],"versionCode":tech["versionCode"],
