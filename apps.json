@@ -2,182 +2,254 @@
   {
     "name": "Bachata-S4",
     "source": "https://github.com/JICA98/Bachata-S4",
-    "asset_regex": "^bachatas4-.*-release\\.apk$"
+    "asset_regex": "^bachatas4-.*-release\\.apk$",
+    "summary": "Emulador experimental de PlayStation 4 para Android.",
+    "description": "O Bachata-S4 é um projeto experimental de emulação de PlayStation 4 no Android. O aplicativo ainda está em desenvolvimento e a compatibilidade pode variar bastante conforme o jogo, o processador e a GPU do aparelho."
   },
   {
     "name": "Bachata-S4-Plus",
     "source": "https://github.com/erickmendes22/Bachata-S4-Plus",
-    "asset_regex": "^Bachata-S4-Plus-v.*\\.apk$"
+    "asset_regex": "^Bachata-S4-Plus-v.*\\.apk$",
+    "summary": "Versão modificada do Bachata-S4 com ajustes extras.",
+    "description": "O Bachata-S4 Plus é uma versão modificada do projeto Bachata-S4, voltada à emulação experimental de PlayStation 4 no Android. A proposta é reunir ajustes e melhorias adicionais de compatibilidade e desempenho."
   },
   {
     "name": "EmuCoreX",
     "source": "https://github.com/sashkinbro/EmuCoreX",
-    "asset_regex": "^EmuCoreX\\.v.*\\.apk$"
+    "asset_regex": "^EmuCoreX\\.v.*\\.apk$",
+    "summary": "Emulador de PlayStation 2 para Android.",
+    "description": "O EmuCoreX é um projeto de emulação de PlayStation 2 para Android. Ele oferece opções de configuração gráfica e de desempenho para adaptar a experiência ao hardware do aparelho."
   },
   {
     "name": "EmuCoreC",
     "source": "https://github.com/sashkinbro/EmuCoreC",
-    "asset_regex": "^EmuCoreC\\.v.*\\.apk$"
+    "asset_regex": "^EmuCoreC\\.v.*\\.apk$",
+    "summary": "Emulador experimental de PlayStation 3 para Android.",
+    "description": "O EmuCoreC é um projeto experimental de emulação de PlayStation 3 no Android. A compatibilidade e o desempenho dependem muito do jogo e do hardware utilizado."
   },
   {
     "name": "EmuCoreV",
     "source": "https://github.com/sashkinbro/EmuCoreV",
-    "asset_regex": "^EmuCoreV\\.v.*\\.apk$"
+    "asset_regex": "^EmuCoreV\\.v.*\\.apk$",
+    "summary": "Projeto de emulação para Android da família EmuCore.",
+    "description": "O EmuCoreV faz parte da família EmuCore e é voltado à emulação no Android. O projeto recebe atualizações frequentes, e os resultados podem variar conforme o aparelho e o jogo testado."
   },
   {
     "name": "WinNative",
     "source": "https://github.com/WinNative-Emu/WinNative",
-    "asset_regex": "^WinNative-v.*-Standard-signed\\.apk$"
+    "asset_regex": "^WinNative-v.*-Standard-signed\\.apk$",
+    "summary": "Execute jogos e programas de Windows no Android.",
+    "description": "O WinNative é uma solução voltada à execução de aplicativos e jogos de Windows no Android. Ele reúne uma camada de compatibilidade e componentes de tradução para tornar programas de PC utilizáveis em aparelhos compatíveis."
   },
   {
     "name": "Quick Tile Settings",
     "source": "https://github.com/RBN-Apps/Quick-Tile-Settings",
-    "asset_regex": "^quick-tile-settings-.*\\.apk$"
+    "asset_regex": "^quick-tile-settings-.*\\.apk$",
+    "summary": "Adicione atalhos extras às Configurações Rápidas do Android.",
+    "description": "O Quick Tile Settings adiciona atalhos e controles extras ao painel de Configurações Rápidas do Android, facilitando o acesso a funções do sistema sem precisar navegar por vários menus."
   },
   {
     "name": "Winlator Ludashi Plus",
     "source": "https://github.com/squalle0nhart/winlator_ludashi_plus",
     "asset_regex": "^winlator-ludashi-plus-.*\\.apk$",
-    "include_prerelease": true
+    "include_prerelease": true,
+    "summary": "Versão modificada do Winlator para jogos e programas de Windows.",
+    "description": "O Winlator Ludashi Plus é uma versão modificada do Winlator voltada à execução de jogos e aplicativos de Windows no Android. Ele inclui ajustes próprios e recursos extras para compatibilidade e desempenho."
   },
   {
     "name": "Vita3K Plus",
     "source": "https://github.com/nckstwrt/Vita3K-Plus",
-    "asset_regex": "^Vita3k-Plus-v.*\\.apk$"
+    "asset_regex": "^Vita3k-Plus-v.*\\.apk$",
+    "summary": "Versão modificada do Vita3K para emulação de PS Vita no Android.",
+    "description": "O Vita3K Plus é uma versão modificada do Vita3K voltada à emulação de jogos de PlayStation Vita no Android. O projeto inclui ajustes próprios e pode apresentar resultados diferentes da versão original."
   },
   {
     "name": "X360 Mobile",
     "source": "https://github.com/Ashnar2602/X360-Mobile---OFFICIAL",
-    "asset_regex": "^x360-mobile-.*\\.apk$"
+    "asset_regex": "^x360-mobile-.*\\.apk$",
+    "summary": "Emulador experimental de Xbox 360 para Android.",
+    "description": "O X360 Mobile é um projeto experimental de emulação de Xbox 360 no Android. A compatibilidade ainda é limitada e o desempenho depende bastante do hardware e do jogo utilizado."
   },
   {
     "name": "Winlator",
     "source": "https://github.com/brunodev85/Winlator",
-    "asset_regex": "^Winlator_.*\\.apk$"
+    "asset_regex": "^Winlator_.*\\.apk$",
+    "summary": "Execute programas e jogos de Windows no Android.",
+    "description": "O Winlator permite executar aplicativos e jogos de Windows no Android utilizando Wine e camadas de tradução para arquiteturas x86 e x64. É especialmente conhecido pelo uso com jogos de PC em aparelhos Android."
   },
   {
     "name": "Shevery",
     "source": "https://github.com/HmnDev-Tech/shevery",
-    "asset_regex": "^manager-release\\.apk$"
+    "asset_regex": "^manager-release\\.apk$",
+    "summary": "Ferramenta avançada para recursos e permissões do Android.",
+    "description": "O Shevery é uma ferramenta voltada a usuários avançados que utilizam recursos de sistema e permissões especiais no Android. Ele pode trabalhar em conjunto com serviços como Shizuku para liberar funções adicionais."
   },
   {
     "name": "Universal Installer",
     "source": "https://github.com/pass-with-high-score/universal-installer",
-    "asset_regex": "^app-release\\.apk$"
+    "asset_regex": "^app-release\\.apk$",
+    "summary": "Instalador avançado de aplicativos e pacotes Android.",
+    "description": "O Universal Installer é um instalador de código aberto para Android com suporte a métodos avançados de instalação. Ele facilita a instalação de diferentes formatos e pode aproveitar permissões elevadas quando disponíveis."
   },
   {
     "name": "AnyAPK",
     "source": "https://github.com/sam1am/anyapk",
-    "asset_regex": "^anyapk-.*-universal\\.apk$"
+    "asset_regex": "^anyapk-.*-universal\\.apk$",
+    "summary": "Instalador de APKs com recursos avançados no Android.",
+    "description": "O AnyAPK é um instalador de aplicativos Android focado em oferecer mais controle durante a instalação de APKs. Ele traz uma interface simples e suporte a métodos avançados de instalação."
   },
   {
     "name": "Candy Browser",
     "source": "https://github.com/sk2andy/candy-browser",
-    "asset_regex": "^CandyBrowser-v[0-9]+(?:\\.[0-9]+)*-release\\.apk$"
+    "asset_regex": "^CandyBrowser-v[0-9]+(?:\\.[0-9]+)*-release\\.apk$",
+    "summary": "Navegador leve e moderno para Android.",
+    "description": "O Candy Browser é um navegador para Android com foco em simplicidade, personalização e uma experiência de navegação moderna. O projeto é de código aberto e recebe atualizações pelo GitHub."
   },
   {
     "name": "Root My Galaxy",
     "source": "https://github.com/BuSung-dev/Root-My-Galaxy",
-    "asset_regex": "^app-debug\\.apk$"
+    "asset_regex": "^app-debug\\.apk$",
+    "summary": "Ferramenta experimental de root para aparelhos Galaxy compatíveis.",
+    "description": "O Root My Galaxy é uma ferramenta experimental voltada a métodos de root em aparelhos Samsung Galaxy compatíveis. O suporte depende do modelo, da versão do Android e das condições específicas do dispositivo."
   },
   {
     "name": "LastWave Native",
     "source": "https://github.com/Clash-Projects/LastWave-Native",
-    "asset_regex": "^LastWave-v.*-universal\\.apk$"
+    "asset_regex": "^LastWave-v.*-universal\\.apk$",
+    "summary": "Cliente moderno de música para Android com catálogo do YouTube Music.",
+    "description": "O LastWave é um cliente nativo de música para Android que utiliza o catálogo do YouTube Music. Ele oferece reprodução em segundo plano, letras sincronizadas, playlists inteligentes e integração com Last.fm."
   },
   {
     "name": "memhogs",
     "source": "https://github.com/cicerothoma/memhogs-android",
-    "asset_regex": "^memhogs-.*\\.apk$"
+    "asset_regex": "^memhogs-.*\\.apk$",
+    "summary": "Veja quais aplicativos estão consumindo mais memória RAM.",
+    "description": "O memhogs mostra o consumo de memória por aplicativo no Android e agrupa processos auxiliares junto ao aplicativo principal. Com Shizuku, ele consegue acessar informações mais detalhadas sem exigir root."
   },
   {
     "name": "Xenra",
     "source": "https://github.com/Yebot32/xenra",
-    "asset_regex": "^Xenra-.*-green-release\\.apk$"
+    "asset_regex": "^Xenra-.*-green-release\\.apk$",
+    "summary": "Emulador de Xbox original e Xbox 360 para Android.",
+    "description": "O Xenra é um projeto de emulação voltado ao Xbox original e Xbox 360 no Android. Ele reúne tecnologias de projetos de emulação já existentes e oferece opções de ajuste de desempenho e resolução."
   },
   {
     "name": "FilePipe",
     "source": "https://github.com/bikram-agarwal/FilePipe",
-    "asset_regex": "^filepipe-v.*-fdroid\\.apk$"
+    "asset_regex": "^filepipe-v.*-fdroid\\.apk$",
+    "summary": "Transfira arquivos entre dispositivos de forma simples.",
+    "description": "O FilePipe é uma ferramenta de transferência de arquivos entre dispositivos, pensada para facilitar o envio de documentos, fotos e outros arquivos de maneira prática."
   },
   {
     "name": "Orion Store",
     "source": "https://github.com/RookieEnough/Orion-Store",
-    "asset_regex": "^app-release\\.apk$"
+    "asset_regex": "^app-release\\.apk$",
+    "summary": "Loja alternativa de aplicativos para Android.",
+    "description": "O Orion Store é uma loja alternativa de aplicativos para Android. Ele oferece uma interface própria para descobrir, consultar e instalar aplicativos disponíveis por suas fontes compatíveis."
   },
   {
     "name": "ADNS",
     "source": "https://github.com/eyalm2000/adns",
-    "asset_regex": "^app-foss-release\\.apk$"
+    "asset_regex": "^app-foss-release\\.apk$",
+    "summary": "Gerencie DNS e bloqueio de anúncios no Android.",
+    "description": "O ADNS é uma ferramenta para Android voltada ao uso de DNS personalizado e recursos relacionados a bloqueio de anúncios e rastreadores. Ele permite alterar a configuração de DNS de forma mais prática."
   },
   {
     "name": "ShizuCallRecorder",
     "source": "https://github.com/kitsumed/ShizuCallRecorder",
-    "asset_regex": "^ShizuCallRecorder-.*\\.apk$"
+    "asset_regex": "^ShizuCallRecorder-.*\\.apk$",
+    "summary": "Gravador de chamadas para Android com suporte ao Shizuku.",
+    "description": "O ShizuCallRecorder é um gravador de chamadas para Android que utiliza o Shizuku para acessar recursos adicionais do sistema sem exigir root em aparelhos compatíveis."
   },
   {
     "name": "Essentials",
     "source": "https://github.com/sameerasw/essentials",
-    "asset_regex": "^app-release\\.apk$"
+    "asset_regex": "^app-release\\.apk$",
+    "summary": "Ferramentas, ajustes e recursos extras para Android.",
+    "description": "O Essentials reúne ferramentas, modificações e soluções práticas para Android, com destaque para aparelhos Pixel. Ele oferece ajustes de sistema, atalhos e recursos avançados, incluindo integração com Shizuku ou root em algumas funções."
   },
   {
     "name": "BlockAds",
     "source": "https://github.com/pass-with-high-score/blockads-android",
-    "asset_regex": "^app-universal-release\\.apk$"
+    "asset_regex": "^app-universal-release\\.apk$",
+    "summary": "Bloqueador de anúncios e rastreadores para Android.",
+    "description": "O BlockAds é uma ferramenta de bloqueio de anúncios e rastreadores no Android. Ele utiliza recursos de rede e filtros para reduzir publicidade e conexões indesejadas em aplicativos e sites."
   },
   {
     "name": "Install With Options",
     "source": "https://github.com/zacharee/InstallWithOptions",
-    "asset_regex": "^InstallWithOptions_.*-release\\.apk$"
+    "asset_regex": "^InstallWithOptions_.*-release\\.apk$",
+    "summary": "Instale APKs usando opções avançadas do instalador do Android.",
+    "description": "O Install With Options permite instalar aplicativos Android com parâmetros e opções avançadas que normalmente não aparecem no instalador padrão. Pode utilizar Shizuku ou outros métodos compatíveis para ampliar as possibilidades."
   },
   {
     "name": "SwiftSlate",
     "source": "https://github.com/Musheer360/SwiftSlate",
-    "asset_regex": "^SwiftSlate-v.*\\.apk$"
+    "asset_regex": "^SwiftSlate-v.*\\.apk$",
+    "summary": "Assistente de IA que reescreve textos diretamente em outros aplicativos.",
+    "description": "O SwiftSlate funciona como um assistente de texto com IA integrado ao Android. Você pode usar comandos dentro de campos de texto para corrigir, reescrever, traduzir ou mudar o tom sem precisar copiar o conteúdo para outro aplicativo."
   },
   {
     "name": "App Manager",
     "source": "https://github.com/MuntashirAkon/AppManager",
-    "asset_regex": "^AppManager_v.*\\.apk$"
+    "asset_regex": "^AppManager_v.*\\.apk$",
+    "summary": "Gerenciador avançado de aplicativos e pacotes Android.",
+    "description": "O App Manager é uma ferramenta avançada para visualizar e gerenciar aplicativos instalados no Android. Ele oferece informações detalhadas de pacotes, permissões, componentes e diversas funções voltadas a usuários avançados."
   },
   {
     "name": "DeepDenoiser",
     "source": "https://github.com/sayampy/deepdenoiser",
-    "asset_regex": "^DeepDenoiser-Arm64.*\\.apk$"
+    "asset_regex": "^DeepDenoiser-Arm64.*\\.apk$",
+    "summary": "Remova ruído de áudio diretamente no Android.",
+    "description": "O DeepDenoiser é uma ferramenta para redução de ruído em arquivos de áudio. Ele utiliza processamento avançado para melhorar gravações e deixar vozes e outros sons mais limpos."
   },
   {
     "name": "RebootNya",
     "source": "https://github.com/daisukiKaffuChino/RebootNya",
-    "asset_regex": "^RebootNya_.*\\.apk$"
+    "asset_regex": "^RebootNya_.*\\.apk$",
+    "summary": "Menu avançado de reinicialização para Android.",
+    "description": "O RebootNya oferece opções extras de reinicialização no Android, permitindo acessar diferentes modos de reboot de forma mais rápida em dispositivos e configurações compatíveis."
   },
   {
     "name": "aShell You",
     "source": "https://github.com/DP-Hridayan/aShellYou",
-    "asset_regex": "^aShellYou-v.*-fdroid-release\\.apk$"
+    "asset_regex": "^aShellYou-v.*-fdroid-release\\.apk$",
+    "summary": "Execute comandos ADB e shell no Android usando Shizuku.",
+    "description": "O aShell You é um terminal com interface moderna para executar comandos ADB e shell diretamente no Android. Ele pode usar Shizuku para fornecer acesso avançado sem depender de um computador."
   },
   {
     "name": "Image Toolbox",
     "source": "https://github.com/T8RIN/ImageToolbox",
-    "asset_regex": "^image-toolbox-.*-foss-universal\\.apk$"
+    "asset_regex": "^image-toolbox-.*-foss-universal\\.apk$",
+    "summary": "Ferramenta completa para editar e converter imagens no Android.",
+    "description": "O Image Toolbox reúne diversas funções de edição e conversão de imagens no Android, incluindo redimensionamento, compressão, conversão de formato, filtros e outras ferramentas em uma única interface."
   },
   {
     "name": "SD Maid SE",
     "source": "https://github.com/d4rken-org/sdmaid-se",
-    "asset_regex": "^eu\\.darken\\.sdmse-v.*-FOSS-RELEASE\\.apk$"
+    "asset_regex": "^eu\\.darken\\.sdmse-v.*-FOSS-RELEASE\\.apk$",
+    "summary": "Ferramenta avançada de limpeza e manutenção do Android.",
+    "description": "O SD Maid SE é uma ferramenta de manutenção do Android voltada à limpeza de arquivos desnecessários, análise de armazenamento e gerenciamento de resíduos deixados por aplicativos."
   },
   {
     "name": "PaperKnife",
     "source": "https://github.com/potatameister/PaperKnife",
-    "asset_regex": "^paperknife-v.*\\.apk$"
+    "asset_regex": "^paperknife-v.*\\.apk$",
+    "summary": "Ferramentas para editar, converter e proteger PDFs no próprio aparelho.",
+    "description": "O PaperKnife é uma ferramenta de PDF focada em privacidade e processamento local. Ele permite unir, dividir, comprimir, converter, assinar e proteger documentos sem precisar enviar os arquivos para servidores externos."
   },
   {
     "name": "BoostX",
     "source": "https://github.com/AumGupta/BoostX",
-    "asset_regex": "^app-release\\.apk$"
+    "asset_regex": "^app-release\\.apk$",
+    "summary": "Aumente o volume e ajuste a intensidade do áudio no Android.",
+    "description": "O BoostX é uma ferramenta de amplificação de áudio para Android. Ele permite aumentar o volume além do nível padrão do sistema e ajustar a intensidade do ganho com controles simples."
   },
   {
     "name": "NewPipe",
     "source": "https://github.com/TeamNewPipe/NewPipe",
-    "asset_regex": "^NewPipe_v.*\\.apk$"
+    "asset_regex": "^NewPipe_v.*\\.apk$",
+    "summary": "Cliente leve e de código aberto para assistir vídeos no Android.",
+    "description": "O NewPipe é um cliente leve e de código aberto para assistir vídeos e ouvir conteúdo no Android sem depender do aplicativo oficial. Ele inclui reprodução em segundo plano, janela flutuante e outros recursos."
   }
 ]
