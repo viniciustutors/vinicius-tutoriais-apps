@@ -71,7 +71,7 @@ jobs:
           archive_older: 0
           nonstandardwebroot: true
           mirrors:
-            - "https://github.com/viniciustutors/vinicius-tutoriais-apps/releases/download"
+            - "https://vinicius-fdroid-proxy.portacerta2014.workers.dev"
           keystore: ".fdroid-secrets/fdroid.keystore"
           repo_keyalias: "__KEY_ALIAS__"
           keystorepass: "__KEYSTORE_PASS__"
