@@ -179,14 +179,34 @@ def main():
                 for chunk in resp.iter_content(chunk_size=1024*1024):
                     if chunk: f.write(chunk)
         expected_digest=(asset.get("digest") or "").strip()
+        if name == "DroidDeck" and not expected_digest.startswith("sha256:"):
+            dest.unlink(missing_ok=True)
+            raise SystemExit("DroidDeck: release oficial sem digest SHA-256; publicação interrompida.")
+
         if expected_digest.startswith("sha256:"):
-            actual_digest="sha256:" + hashlib.sha256(dest.read_bytes()).hexdigest()
+            h=hashlib.sha256()
+            with dest.open("rb") as f:
+                for chunk in iter(lambda: f.read(1024*1024), b""):
+                    h.update(chunk)
+            actual_digest="sha256:" + h.hexdigest()
             if actual_digest.lower() != expected_digest.lower():
                 dest.unlink(missing_ok=True)
                 raise SystemExit(
                     f"{name}: SHA-256 do APK baixado não confere com o digest oficial do GitHub."
                 )
             print(f"[{name}] SHA-256 oficial conferido.")
+
+        if name == "DroidDeck":
+            verify=subprocess.run(
+                ["apksigner","verify","--verbose",str(dest)],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            if verify.returncode != 0:
+                dest.unlink(missing_ok=True)
+                raise SystemExit("DroidDeck: apksigner rejeitou o APK oficial.\n" + verify.stdout)
+            print("[DroidDeck] assinatura APK validada pelo apksigner.")
 
         tech=parse_badging(dest)
         if tech["package"] in seen_packages:
