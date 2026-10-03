@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import base64, json, os, re, subprocess, shutil
+import base64, json, os, re, subprocess, shutil, hashlib
 from pathlib import Path
 from urllib.parse import quote, urlparse
 import requests, yaml
@@ -178,6 +178,16 @@ def main():
             with dest.open("wb") as f:
                 for chunk in resp.iter_content(chunk_size=1024*1024):
                     if chunk: f.write(chunk)
+        expected_digest=(asset.get("digest") or "").strip()
+        if expected_digest.startswith("sha256:"):
+            actual_digest="sha256:" + hashlib.sha256(dest.read_bytes()).hexdigest()
+            if actual_digest.lower() != expected_digest.lower():
+                dest.unlink(missing_ok=True)
+                raise SystemExit(
+                    f"{name}: SHA-256 do APK baixado não confere com o digest oficial do GitHub."
+                )
+            print(f"[{name}] SHA-256 oficial conferido.")
+
         tech=parse_badging(dest)
         if tech["package"] in seen_packages:
             print(f"::warning::{name} usa o mesmo packageName de {seen_packages[tech['package']]}: {tech['package']}")
