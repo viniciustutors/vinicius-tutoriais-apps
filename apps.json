@@ -251,5 +251,12 @@
     "asset_regex": "^NewPipe_v.*\\.apk$",
     "summary": "Cliente leve e de código aberto para assistir vídeos no Android.",
     "description": "O NewPipe é um cliente leve e de código aberto para assistir vídeos e ouvir conteúdo no Android sem depender do aplicativo oficial. Ele inclui reprodução em segundo plano, janela flutuante e outros recursos."
+  },
+  {
+    "name": "DroidDeck",
+    "source": "https://github.com/Droid-Deck/DroidDeck",
+    "asset_regex": "^DroidDeck-[0-9]+(?:\\.[0-9]+)*\\.apk$",
+    "summary": "Experiência inspirada no SteamOS para jogos de PC no Android.",
+    "description": "O DroidDeck leva uma experiência semelhante à Steam Deck para aparelhos Android compatíveis. Ele integra o cliente Steam em Big Picture, suporte a jogos de Windows por meio do Proton ARM64, controles no estilo Steam Deck, monitoramento de desempenho, gerenciamento de drivers de GPU e recursos para aplicativos Linux. O projeto não exige root e é voltado principalmente a dispositivos com GPU Adreno compatível."
   }
 ]
