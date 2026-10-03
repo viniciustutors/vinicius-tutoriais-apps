@@ -48,6 +48,47 @@ jobs:
           pip install --upgrade pip
           pip install fdroidserver requests PyYAML Pillow
 
+      - name: Compatibilidade DroidDeck - rotação de chave v3
+        shell: bash
+        run: |
+          . .venv/bin/activate
+          python3 - <<'PY'
+          from pathlib import Path
+          import fdroidserver.common
+
+          p = Path(fdroidserver.common.__file__)
+          s = p.read_text()
+
+          old = '''    if not all(cert == found_certs[0] for cert in found_certs):
+              logging.error(
+                  _("APK signatures have different certificates in {path}:").format(
+                      path=apkpath
+                  )
+              )
+              return
+          '''
+
+          new = '''    if not all(cert == found_certs[0] for cert in found_certs):
+              if os.path.basename(apkpath).startswith("DroidDeck__") and certs_v3:
+                  logging.warning(
+                      "DroidDeck usa rotação de chave APK v3; usando o certificado v3 atual."
+                  )
+              else:
+                  logging.error(
+                      _("APK signatures have different certificates in {path}:").format(
+                          path=apkpath
+                      )
+                  )
+                  return
+          '''
+
+          if old not in s:
+              raise SystemExit("Bloco de validação do fdroidserver mudou; patch DroidDeck não aplicado.")
+
+          p.write_text(s.replace(old, new))
+          print("Compatibilidade DroidDeck aplicada somente a arquivos DroidDeck__*.apk")
+          PY
+
       - name: Restaurar chave privada
         shell: bash
         run: |
