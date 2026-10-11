@@ -258,5 +258,12 @@
     "asset_regex": "^DroidDeck-[0-9]+(?:\\.[0-9]+)*\\.apk$",
     "summary": "Experiência inspirada no SteamOS para jogos de PC no Android.",
     "description": "O DroidDeck leva uma experiência semelhante à Steam Deck para aparelhos Android compatíveis. Ele integra o cliente Steam em Big Picture, suporte a jogos de Windows por meio do Proton ARM64, controles no estilo Steam Deck, monitoramento de desempenho, gerenciamento de drivers de GPU e recursos para aplicativos Linux. O projeto não exige root e é voltado principalmente a dispositivos com GPU Adreno compatível."
+  },
+  {
+    "name": "Shizuku Next",
+    "source": "https://github.com/rushiranpise/Shizuku-Next",
+    "asset_regex": "^shizuku-v[0-9]+(?:\\.[0-9]+)*-next\\.apk$",
+    "summary": "Versão alternativa do Shizuku com recursos extras e melhorias de inicialização.",
+    "description": "O Shizuku Next é um fork do Shizuku que permite que outros aplicativos utilizem APIs de sistema que normalmente exigem privilégios ADB ou root. Ele adiciona recursos como inicialização automatizada, pareamento sem digitar o código, watchdog, modo TCP, suporte a automação, modo furtivo, atualizações pelo próprio app e melhorias para Android TV, VR e dispositivos MediaTek. Esta versão usa a mesma package name do Shizuku oficial, mas é assinada com uma chave diferente; por isso, não pode ser instalada por cima do Shizuku oficial ou de outros forks assinados com outra chave."
   }
 ]
