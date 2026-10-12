@@ -80,7 +80,7 @@
   {
     "name": "Shevery",
     "source": "https://github.com/HmnDev-Tech/shevery",
-    "asset_regex": "^manager-release\\.apk$",
+    "asset_regex": "^(?:manager|shevery)-release\\.apk$",
     "summary": "Ferramenta avançada para recursos e permissões do Android.",
     "description": "O Shevery é uma ferramenta voltada a usuários avançados que utilizam recursos de sistema e permissões especiais no Android. Ele pode trabalhar em conjunto com serviços como Shizuku para liberar funções adicionais."
   },
