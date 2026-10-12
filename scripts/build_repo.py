@@ -21,17 +21,44 @@ SESSION = requests.Session(); SESSION.headers.update(HEADERS)
 def gh_get(url):
     r = SESSION.get(url, timeout=45); r.raise_for_status(); return r.json()
 
-def release_for(owner, project, app):
+def release_for(owner, project, app, pattern):
     if app.get("release_tag"):
         tag = quote(str(app["release_tag"]), safe="")
-        return gh_get(f"https://api.github.com/repos/{owner}/{project}/releases/tags/{tag}")
-    if app.get("include_prerelease"):
-        releases = gh_get(f"https://api.github.com/repos/{owner}/{project}/releases?per_page=100")
-        releases = [x for x in releases if not x.get("draft")]
-        if not releases: raise RuntimeError(f"{owner}/{project}: nenhuma release publicada.")
-        releases.sort(key=lambda x:x.get("published_at") or x.get("created_at") or "", reverse=True)
-        return releases[0]
-    return gh_get(f"https://api.github.com/repos/{owner}/{project}/releases/latest")
+        release = gh_get(f"https://api.github.com/repos/{owner}/{project}/releases/tags/{tag}")
+        if any(pattern.search(asset.get("name", "")) for asset in release.get("assets", [])):
+            return release
+        names = ", ".join(a.get("name", "") for a in release.get("assets", []))
+        raise RuntimeError(
+            f"{owner}/{project}: a release fixa {app['release_tag']} não contém APK "
+            f"compatível com {pattern.pattern!r}. Arquivos: {names}"
+        )
+
+    releases = gh_get(f"https://api.github.com/repos/{owner}/{project}/releases?per_page=100")
+    releases = [x for x in releases if not x.get("draft")]
+
+    if not app.get("include_prerelease"):
+        releases = [x for x in releases if not x.get("prerelease")]
+
+    releases.sort(
+        key=lambda x: x.get("published_at") or x.get("created_at") or "",
+        reverse=True,
+    )
+
+    if not releases:
+        raise RuntimeError(f"{owner}/{project}: nenhuma release publicada.")
+
+    for release in releases:
+        if any(pattern.search(asset.get("name", "")) for asset in release.get("assets", [])):
+            return release
+
+    recent = []
+    for release in releases[:10]:
+        files = ", ".join(a.get("name", "") for a in release.get("assets", [])) or "(sem assets)"
+        recent.append(f"{release.get('tag_name')}: {files}")
+    raise RuntimeError(
+        f"{owner}/{project}: nenhuma das releases recentes contém APK compatível "
+        f"com {pattern.pattern!r}. Releases verificadas: " + " | ".join(recent)
+    )
 
 def clean_markdown(text, max_chars=1800):
     if not text: return ""
@@ -150,38 +177,105 @@ def write_metadata(app, repo_info, release, apk_path, tech, readme):
 
 def main():
     apps=json.loads(APPS_FILE.read_text(encoding="utf-8"))
-    for p in REPO_DIR.glob("*.apk"): p.unlink()
+    for p in REPO_DIR.glob("*.apk"):
+        p.unlink()
     if METADATA_DIR.exists():
         for p in list(METADATA_DIR.iterdir()):
             p.unlink() if p.is_file() else shutil.rmtree(p)
-    states=[]; seen_packages={}
+
+    states=[]
+    seen_packages={}
+    plans=[]
+    errors=[]
+
+    print("Pré-validando releases e APKs dos aplicativos...")
+
     for app in apps:
         if app.get("enabled",True) is False:
-            print(f"[{app.get('name','?')}] desativado; ignorando."); continue
-        name=app["name"]; source=app["source"]; parsed=urlparse(source)
-        if parsed.netloc.lower()!="github.com": raise SystemExit(f"{name}: source precisa ser um repositório GitHub.")
-        parts=[p for p in parsed.path.strip("/").split("/") if p]
-        if len(parts)<2: raise SystemExit(f"{name}: link GitHub inválido: {source}")
-        owner,project=parts[:2]
-        repo_info=gh_get(f"https://api.github.com/repos/{owner}/{project}")
-        release=release_for(owner,project,app); pattern=re.compile(app.get("asset_regex",r"\.apk$"),re.I)
-        matches=[asset for asset in release.get("assets",[]) if pattern.search(asset.get("name",""))]
-        if not matches:
-            names=", ".join(a.get("name","") for a in release.get("assets",[]))
-            raise SystemExit(f"{name}: nenhum APK corresponde a {pattern.pattern!r}. Arquivos disponíveis: {names}")
-        matches.sort(key=lambda a:("universal" not in a["name"].lower(),"arm64" not in a["name"].lower(),a["name"].lower()))
-        asset=matches[0]; safe=re.sub(r"[^A-Za-z0-9._-]+","-",name).strip("-")
+            print(f"[{app.get('name','?')}] desativado; ignorando.")
+            continue
+
+        name=app["name"]
+        source=app["source"]
+
+        try:
+            parsed=urlparse(source)
+            if parsed.netloc.lower()!="github.com":
+                raise RuntimeError("source precisa ser um repositório GitHub.")
+
+            parts=[p for p in parsed.path.strip("/").split("/") if p]
+            if len(parts)<2:
+                raise RuntimeError(f"link GitHub inválido: {source}")
+
+            owner,project=parts[:2]
+            repo_info=gh_get(f"https://api.github.com/repos/{owner}/{project}")
+            pattern=re.compile(app.get("asset_regex",r"\.apk$"),re.I)
+            release=release_for(owner,project,app,pattern)
+
+            matches=[
+                asset for asset in release.get("assets",[])
+                if pattern.search(asset.get("name",""))
+            ]
+            if not matches:
+                names=", ".join(a.get("name","") for a in release.get("assets",[]))
+                raise RuntimeError(
+                    f"nenhum APK corresponde a {pattern.pattern!r}. "
+                    f"Arquivos disponíveis: {names}"
+                )
+
+            matches.sort(
+                key=lambda a:(
+                    "universal" not in a["name"].lower(),
+                    "arm64" not in a["name"].lower(),
+                    a["name"].lower(),
+                )
+            )
+            asset=matches[0]
+            plans.append((app,name,owner,project,repo_info,release,asset))
+            print(f"[OK] {name}: {release.get('tag_name')} -> {asset.get('name')}")
+
+        except Exception as exc:
+            errors.append(f"{name}: {exc}")
+            print(f"[ERRO] {name}: {exc}")
+
+    if errors:
+        print("\nPré-validação encontrou problemas:")
+        for err in errors:
+            print(" - " + err)
+        raise SystemExit(
+            f"Pré-validação falhou em {len(errors)} aplicativo(s). "
+            "Nenhum APK foi baixado."
+        )
+
+    print(f"\nPré-validação concluída: {len(plans)} aplicativos prontos. Iniciando downloads...")
+
+    for app,name,owner,project,repo_info,release,asset in plans:
+        safe=re.sub(r"[^A-Za-z0-9._-]+","-",name).strip("-")
         dest=REPO_DIR/f"{safe}__{asset['name']}"
-        print(f"\n[{name}] release {release.get('tag_name')} ({'pre-release' if release.get('prerelease') else 'estável'})")
-        with SESSION.get(asset["browser_download_url"],stream=True,timeout=300,allow_redirects=True) as resp:
+
+        print(
+            f"\n[{name}] release {release.get('tag_name')} "
+            f"({'pre-release' if release.get('prerelease') else 'estável'})"
+        )
+
+        with SESSION.get(
+            asset["browser_download_url"],
+            stream=True,
+            timeout=300,
+            allow_redirects=True,
+        ) as resp:
             resp.raise_for_status()
             with dest.open("wb") as f:
                 for chunk in resp.iter_content(chunk_size=1024*1024):
-                    if chunk: f.write(chunk)
+                    if chunk:
+                        f.write(chunk)
+
         expected_digest=(asset.get("digest") or "").strip()
         if name == "DroidDeck" and not expected_digest.startswith("sha256:"):
             dest.unlink(missing_ok=True)
-            raise SystemExit("DroidDeck: release oficial sem digest SHA-256; publicação interrompida.")
+            raise SystemExit(
+                "DroidDeck: release oficial sem digest SHA-256; publicação interrompida."
+            )
 
         if expected_digest.startswith("sha256:"):
             h=hashlib.sha256()
@@ -205,16 +299,40 @@ def main():
             )
             if verify.returncode != 0:
                 dest.unlink(missing_ok=True)
-                raise SystemExit("DroidDeck: apksigner rejeitou o APK oficial.\n" + verify.stdout)
+                raise SystemExit(
+                    "DroidDeck: apksigner rejeitou o APK oficial.\n" + verify.stdout
+                )
             print("[DroidDeck] assinatura APK validada pelo apksigner.")
 
         tech=parse_badging(dest)
+
         if tech["package"] in seen_packages:
-            print(f"::warning::{name} usa o mesmo packageName de {seen_packages[tech['package']]}: {tech['package']}")
-        else: seen_packages[tech["package"]]=name
-        state=write_metadata(app,repo_info,release,dest,tech,read_repo_readme(owner,project)); states.append(state)
-        print(f"[{name}] {tech['package']} | {tech['versionName']} ({tech['versionCode']}) | {dest.stat().st_size/1024/1024:.1f} MB")
-    STATE_FILE.write_text(json.dumps(states,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            print(
+                f"::warning::{name} usa o mesmo packageName de "
+                f"{seen_packages[tech['package']]}: {tech['package']}"
+            )
+        else:
+            seen_packages[tech["package"]]=name
+
+        state=write_metadata(
+            app,
+            repo_info,
+            release,
+            dest,
+            tech,
+            read_repo_readme(owner,project),
+        )
+        states.append(state)
+
+        print(
+            f"[{name}] {tech['package']} | {tech['versionName']} "
+            f"({tech['versionCode']}) | {dest.stat().st_size/1024/1024:.1f} MB"
+        )
+
+    STATE_FILE.write_text(
+        json.dumps(states,ensure_ascii=False,indent=2)+"\n",
+        encoding="utf-8",
+    )
     print(f"\nMetadados gerados para {len(states)} aplicativos.")
 
 if __name__=="__main__": main()
